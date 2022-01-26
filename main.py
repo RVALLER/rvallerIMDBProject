@@ -8,6 +8,6 @@ r = requests.get("https://imdb-api.com/", auth=('RVA113R', 'hwmq4lj0'))
 print(r.status_code)
 
 
-# Temp placeholder top pass Actions Test on Git
+# Temp placeholder top pass Actions Test on GitHub
 def test_placeholder():
     pass
