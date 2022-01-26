@@ -13,3 +13,7 @@ response_API = requests.request("GET", url, headers=headers, data=payload)
 data = response_API.text
 json.loads(data)
 parse_json = json.loads(data)
+print(data)
+# info = parse_json['items'][0]['rank']
+# test = []
+print((parse_json['items'][0]['rank']))
