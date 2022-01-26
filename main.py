@@ -1,4 +1,5 @@
 # Start to my IMDB Project
+# Requests good for working with api
 import requests
 import json
 import imdb
