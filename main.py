@@ -1,19 +1,31 @@
 # Start to my IMDB Project
-import requests
 import json
-import imdb
-import psec
+import sys
 import requests
+import numpy as np
+import pandas as pd
+import secret
 
-url = "https://imdb-api.com/en/API/Top250TVs/k_hwmq4lj0"
-payload = {}
-headers = {}
-response_API = requests.request("GET", url, headers=headers, data=payload)
-# print(response_API.status_code)
-data = response_API.text
-json.loads(data)
-parse_json = json.loads(data)
-print(data)
-# info = parse_json['items'][0]['rank']
-# test = []
-print((parse_json['items'][0]['rank']))
+
+def main():
+    #Save Reference
+    original_stdout = sys.stdout
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secret.main()}"
+    results = requests.get(url)
+    if results.status_code != 200:
+        print("Uh-Oh")
+        return
+    data_pull = results.json()
+    print(data_pull)
+    with open("optoptv.txt", 'w') as f:
+        for key, value in data_pull.items():
+            f.write('%s%s\n\n' % (key, value))
+    f.close()
+
+
+
+main()
+
+
+
+
