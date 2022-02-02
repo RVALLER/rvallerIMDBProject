@@ -67,13 +67,4 @@ def main():
         fii.write("\n")
 
 
-
-
-
-
-
-
-
-
-
 main()
