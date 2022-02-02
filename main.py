@@ -10,7 +10,6 @@ import pandas as pd
 
 def main():
     # ------------------------------ Part I Start ------------------------------- #
-    original_stdout = sys.stdout
     url = f"https://imdb-api.com/en/API/Top250TVs/{secret.main()}"
     results = requests.get(url)
 
@@ -25,18 +24,14 @@ def main():
         dict_writer.writeheader()
         dict_writer.writerows(thelist)
         f.close()
-
     # -------------------------------- PART 2 -------------------------------------- #
 
     loc = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt7462410"
     res_2 = requests.get(loc)
     data_2 = res_2.json()
     form = pd.DataFrame.from_dict(data_2)
-    # print(data_2)
     with open("output2.csv", 'w') as csv_file:
         form.to_csv(csv_file)
-    # csv_columns = ['imDbID','title', 'fullTitle','type', 'year', 'totalRating', 'totalRatingVotes', 'ratings',]
-
     # ------------------------------- PART 3 ------------------------------------------ #
     top1 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt5491994"
     scrape = requests.get(top1)
@@ -50,12 +45,13 @@ def main():
     scrape03 = requests.get(top100)
     data03 = scrape03.json()
     form03 = pd.DataFrame.from_dict(data03)
-    top200 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt2100976"
+    top200 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt1492966"
     scrape04 = requests.get(top200)
     data04 = scrape04.json()
     form04 = pd.DataFrame.from_dict(data04)
 
-    with open("output3.csv", 'w') as fii:
+    with open("output.csv", 'a') as fii:
+        fii.write("\n\n\n\n\n")
         form01.to_csv(fii)
         fii.write("\n")
         form02.to_csv(fii)
