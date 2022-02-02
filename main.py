@@ -1,10 +1,7 @@
 # Start to my IMDB Project
 import csv
-import sys
 import requests
 import secret
-from time import sleep
-from urllib.request import Request, urlopen
 import pandas as pd
 
 
@@ -17,11 +14,11 @@ def main():
         print("Uh-Oh")
         return
     data_pull = results.json()
-    thelist = data_pull['items']
-    keys = thelist[0].keys()
+    thelist = data_pull['items'] # Takes only the pertinent info from the data scrape and appends to dictionary
+    keys = thelist[0].keys()     # Extracts the row/column headers for use in file (e.g: id, rating, etc. )
     with open("output.csv", 'w') as f:
-        dict_writer = csv.DictWriter(f, keys)
-        dict_writer.writeheader()
+        dict_writer = csv.DictWriter(f, keys)    # Uses the dictionary writer of csv mod to write the row titles to file
+        dict_writer.writeheader()                # Uses the csv python module to write the keys from dictionary to csv
         dict_writer.writerows(thelist)
         f.close()
     # -------------------------------- PART 2 -------------------------------------- #
@@ -29,10 +26,16 @@ def main():
     loc = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt7462410"
     res_2 = requests.get(loc)
     data_2 = res_2.json()
-    form = pd.DataFrame.from_dict(data_2)
+    form = pd.DataFrame.from_dict(data_2)  # Creates a dataframe in pandas to extract a single api scrape for csv output
     with open("output2.csv", 'w') as csv_file:
-        form.to_csv(csv_file)
+        form.to_csv(csv_file)  # uses to_csv to convert dataframe to the csv file in proper formatting
     # ------------------------------- PART 3 ------------------------------------------ #
+
+    # This portion of code uses similar pieces from part I and II and siphons relevant data
+    # from top 1, 50, 150, and 200 and appends it to the section below Part I's write.
+    # top1, top50, top100 and top200 are variables to store api data for ratings
+    # forms01-04 are for dataframing the apis and scrapes01-04 are simply to fetch request the data
+
     top1 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt5491994"
     scrape = requests.get(top1)
     data01 = scrape.json()
@@ -49,6 +52,8 @@ def main():
     scrape04 = requests.get(top200)
     data04 = scrape04.json()
     form04 = pd.DataFrame.from_dict(data04)
+
+    # Final comments: the new lines are just for less of an eyesore for the output
 
     with open("output.csv", 'a') as fii:
         fii.write("\n\n\n\n\n")
