@@ -10,30 +10,32 @@ def setup_db(cursor: sqlite3.Cursor):
         rating FLOAT DEFAULT 0,
         rating_count FLOAT DEFAULT 0);''')
 
-    # cursor.execute('''CREATE TABLE IF NOT EXISTS ratings_data(
-	#     id TEXT NOT NULL,
-	#     total_rating INTEGER NOT NULL,
-	#     total_rating_votes INTEGER,
-	#     10Rating%	INTEGER NOT NULL,
-	#     10RatingVotes	INTEGER NOT NULL,
-	#     9Rating% INTEGER NOT NULL,
-	#     9RatingVotes INTEGER NOT NULL,
-	#     8Rating%	INTEGER NOT NULL,
-	#     8RatingVotes	INTEGER NOT NULL,
-	#     7Rating%	INTEGER NOT NULL,
-	#     7RatingVotes	INTEGER NOT NULL,
-	#     6Rating%	INTEGER NOT NULL,
-	#     6RatingVotes	INTEGER NOT NULL,
-	#     5Rating%	INTEGER NOT NULL,
-	#     4Rating%	INTEGER NOT NULL,
-	#     4RatingVotes	INTEGER NOT NULL,
-	#     3Rating%	INTEGER NOT NULL,
-	#     3RatingVotes	INTEGER NOT NULL,
-	#     2Rating%	INTEGER NOT NULL,
-	#     2RatingVotes	INTEGER NOT NULL,
-	#     1Rating%	INTEGER NOT NULL,
-	#     1RatingVotes	INTEGER NOT NULL,
-	#     FOREIGN KEY id REFERENCES headline_data id);''')
+    cursor.execute('''CREATE TABLE IF NOT EXISTS ratings_data(
+        id TEXT NOT NULL,
+        total_rating FLOAT NOT NULL,
+        rating_votes INTEGER NOT NULL,
+        TenRating FLOAT NOT NULL,
+        TenRateVotes INTEGER NOT NULL,
+        NineRating FLOAT NOT NULL,
+        NineRateVotes INTEGER NOT NULL,
+        EightRating FLOAT NOT NULL,
+        EightRateVotes INTEGER NOT NULL,
+        SevenRate FLOAT NOT NULL,
+        SevenRateVotes INTEGER NOT NULL,
+        SixRating FLOAT NOT NULL,
+        SixRateVotes INTEGER NOT NULL,
+        FiveRating FLOAT NOT NULL,
+        FiveRateVotes INTEGER NOT NULL,
+        FourRate FLOAT NOT NULL,
+        FourRateVotes INTEGER NOT NULL,
+        ThreeRate FLOAT NOT NULL,
+        ThreeRateVotes INTEGER NOT NULL,
+        TwoRate FLOAT NOT NULL,
+        TwoRateVotes INTEGER NOT NULL,
+        OneRate FLOAT NOT NULL,
+        OneRateVotes INTEGER NOT NULL,
+        FOREIGN KEY (id) REFERENCES headline_data (id)
+        ON DELETE CASCADE ON UPDATE NO ACTION);''')
 
 
 def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
@@ -48,7 +50,7 @@ def close_db(connection: sqlite3.Connection):
 
 
 def main():
-    conn, cursor = open_db("movie_api.sqlite")
+    conn, cursor = open_db("movie_api.db")
     setup_db(cursor)
     close_db(conn)
 
