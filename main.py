@@ -1,10 +1,11 @@
 # Start to my IMDB Project
 import csv
+import sqlite3
+
 import requests
 import secret
 import pandas as pd
-
-
+import database_stuff
 
 def extract():
     # ------------------------------ Part I Start ------------------------------- #
@@ -69,5 +70,30 @@ def extract():
 
     # ----------------------------------- Database Portion for Sprint 2 ------------------------
 
+    conn = sqlite3.connect('movie_api.db')
+    curs = conn.cursor()
+    takecsv = pd.read_csv(r'output.csv', on_bad_lines='skip', encoding='latin-1')
+    frame = pd.DataFrame(takecsv)
+    database_stuff.open_db('movie_api.db')
+    database_stuff.setup_db(curs)
+
+    database_stuff.main()
+    for row in frame.itertuples():
+        curs.execute('''
+            INSERT INTO headline_data (id, year, crew, title, full_title, rating, rating_count)
+            VALUES (?,?,?,?,?,?,?
+            ''',
+            row.id,
+            row.year,
+            row.crew,
+            row.title,
+            row.fullTitle,
+            row.imDbRating,
+            row.imDbRatingCount)
+    conn.commit()
+
+
 
 extract()
+
+

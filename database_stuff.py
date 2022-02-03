@@ -1,5 +1,6 @@
 import sqlite3
 from typing import Tuple
+import pandas as pd
 
 def setup_db(cursor: sqlite3.Cursor):
     cursor.execute('''CREATE TABLE IF NOT EXISTS headline_data( 
@@ -7,6 +8,7 @@ def setup_db(cursor: sqlite3.Cursor):
         title TEXT NOT NULL,
         full_title TEXT NOT NULL,
         crew TEXT,
+        year INTEGER NOT NULL,
         rating FLOAT DEFAULT 0,
         rating_count FLOAT DEFAULT 0);''')
 
@@ -53,6 +55,7 @@ def main():
     conn, cursor = open_db("movie_api.db")
     setup_db(cursor)
     close_db(conn)
+
 
 
 main()
