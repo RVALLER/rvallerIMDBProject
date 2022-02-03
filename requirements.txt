@@ -1,4 +1,3 @@
-csv
-requests
-secret
-pandas
+requests~=2.27.1
+pandas~=1.4.0
+secret~=0.8
