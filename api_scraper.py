@@ -1,11 +1,11 @@
 # Start to my IMDB Project
 import csv
-import sqlite3
+
 
 import requests
 import secret
 import pandas as pd
-import database_stuff
+
 
 def extract():
     # ------------------------------ Part I Start ------------------------------- #
