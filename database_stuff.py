@@ -1,6 +1,6 @@
 import sqlite3
 from typing import Tuple
-import secret
+import secrets
 import requests
 import pandas as pd
 import csv
@@ -44,7 +44,7 @@ def setup_db(cursor: sqlite3.Cursor):
         ON DELETE CASCADE ON UPDATE NO ACTION);''')
 
 
-url = f"https://imdb-api.com/en/API/Top250TVs/{secret.main()}"
+url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.main()}"
 results = requests.get(url)
 data_pull = results.json()
 thelist = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
@@ -93,9 +93,8 @@ def populate_headline_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
                                                         data_dict[key][5]))
         conn.commit()
 
-# def populate_ratings_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
-#     r_data = get_rate()
-#     keyz = r_data[]
+def populate_ratings_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
+
 
 def main():
     name = 'movie_api.db'
