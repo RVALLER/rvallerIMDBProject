@@ -1,11 +1,10 @@
 # Start to my IMDB Project
 import csv
-import sqlite3
 
 import requests
 import secret
 import pandas as pd
-import database_stuff
+
 
 def extract():
     # ------------------------------ Part I Start ------------------------------- #
@@ -57,7 +56,7 @@ def extract():
 
     # Final comments: the new lines are just for less of an eyesore for the output
 
-    with open("output.csv", 'a') as fii:
+    with open("output2.csv", 'a') as fii:
         fii.write("\n\n\n\n\n")
         form01.to_csv(fii)
         fii.write("\n")
@@ -68,32 +67,62 @@ def extract():
         form04.to_csv(fii)
         fii.write("\n")
 
+
     # ----------------------------------- Database Portion for Sprint 2 ------------------------
+    # flat_dict = {}
+    # list(flat_dict) = data01
+    # for i in data01['ratings']:
+    #     data01.append(i)
+    #
+    # print(flat_dict)
+    #
+    # for item in flat_dict:
+    #     rate = item["rating"]
+    #     ratekey = f"{rate}rating"
+    #     percentKey = f"{rate}percent"
+    #     flat_dict[percentKey] = item["percent"]
+    #
+    # print(flat_dict)
 
-    conn = sqlite3.connect('movie_api.db')
-    curs = conn.cursor()
-    takecsv = pd.read_csv(r'output.csv', on_bad_lines='skip', encoding='latin-1')
-    frame = pd.DataFrame(takecsv)
-    database_stuff.open_db('movie_api.db')
-    database_stuff.setup_db(curs)
+    sample_dict = {"class": "comp490",
+                   "cap": 24,
+                   "outcomes": [
+                       {"number": 1,
+                        "name": "work in groups",
+                        "origen": "alumni"},
+                       {"number": 2,
+                        "name": "Ethical Dilemmas",
+                        "origen": "Local Hiring Managers"}
+                   ]}
 
-    database_stuff.main()
-    for row in frame.itertuples():
-        curs.execute('''
-            INSERT INTO headline_data (id, year, crew, title, full_title, rating, rating_count)
-            VALUES (?,?,?,?,?,?,?
-            ''',
-            row.id,
-            row.year,
-            row.crew,
-            row.title,
-            row.fullTitle,
-            row.imDbRating,
-            row.imDbRatingCount)
-    conn.commit()
+    def flatten_dict(dictionary_with_list):
+        flat_dict = {}
+        flat_dict['class'] = dictionary_with_list['class']
+        flat_dict['cap'] = dictionary_with_list['cap']
+        for outcome_val in dictionary_with_list["outcomes"]:
+            new_key_base = f"outcome {outcome_val['number']}"
+            name_key = f"{new_key_base}_name"
+            flat_dict[name_key] = outcome_val["name"]
+            origen_key = f"{new_key_base}_origen"
+            flat_dict[origen_key] = outcome_val["origen"]
+        return flat_dict
 
+    def main():
+        new_flat_version = flatten_dict(sample_dict)
+        print(new_flat_version)
+
+    if __name__ == '__main__':
+        main()
 
 
 extract()
 
-
+'''
+take his code api apply in function for adding data for rankings
+seperate functions for eac h id (ttcode)
+for key, value in data
+    if key == 'id'
+        value = name
+insert values(?, ?, ?, ?) , (name...)"""
+insert
+'''

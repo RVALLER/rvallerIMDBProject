@@ -1,11 +1,133 @@
-,imDbId,title,fullTitle,type,year,totalRating,totalRatingVotes,ratings,errorMessage
-0,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '10', 'percent': '25.6%', 'votes': '21257'}",
-1,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '9', 'percent': '14.1%', 'votes': '11740'}",
-2,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '8', 'percent': '20.1%', 'votes': '16668'}",
-3,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '7', 'percent': '14.4%', 'votes': '11953'}",
-4,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '6', 'percent': '7.3%', 'votes': '6051'}",
-5,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '5', 'percent': '4.3%', 'votes': '3534'}",
-6,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '4', 'percent': '2.5%', 'votes': '2105'}",
-7,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '3', 'percent': '2.5%', 'votes': '2076'}",
-8,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '2', 'percent': '2.3%', 'votes': '1938'}",
-9,tt7462410,The Wheel of Time,The Wheel of Time (TV Series 2021– ),TVSeries,2021,0,83054,"{'rating': '1', 'percent': '6.9%', 'votes': '5732'}",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+i,m,D,b,I,d
+t,t,7,4,6,2,4,1,0
+t,i,t,l,e
+T,h,e, ,W,h,e,e,l, ,o,f, ,T,i,m,e
+t,o,t,a,l,R,a,t,i,n,g
+0
+t,o,t,a,l,R,a,t,i,n,g,V,o,t,e,s
+8,4,3,8,7
+r,a,t,i,n,g, ,1,0,_,v,o,t,e,s
+2,1,4,0,8
+r,a,t,i,n,g, ,1,0,_,p,e,r,c,e,n,t
+2,5,.,4,%
+r,a,t,i,n,g, ,9,_,v,o,t,e,s
+1,1,8,7,4
+r,a,t,i,n,g, ,9,_,p,e,r,c,e,n,t
+1,4,.,1,%
+r,a,t,i,n,g, ,8,_,v,o,t,e,s
+1,6,9,7,9
+r,a,t,i,n,g, ,8,_,p,e,r,c,e,n,t
+2,0,.,1,%
+r,a,t,i,n,g, ,7,_,v,o,t,e,s
+1,2,2,8,5
+r,a,t,i,n,g, ,7,_,p,e,r,c,e,n,t
+1,4,.,6,%
+r,a,t,i,n,g, ,6,_,v,o,t,e,s
+6,2,0,9
+r,a,t,i,n,g, ,6,_,p,e,r,c,e,n,t
+7,.,4,%
+r,a,t,i,n,g, ,5,_,v,o,t,e,s
+3,6,1,0
+r,a,t,i,n,g, ,5,_,p,e,r,c,e,n,t
+4,.,3,%
+r,a,t,i,n,g, ,4,_,v,o,t,e,s
+2,1,4,1
+r,a,t,i,n,g, ,4,_,p,e,r,c,e,n,t
+2,.,5,%
+r,a,t,i,n,g, ,3,_,v,o,t,e,s
+2,1,1,2
+r,a,t,i,n,g, ,3,_,p,e,r,c,e,n,t
+2,.,5,%
+r,a,t,i,n,g, ,2,_,v,o,t,e,s
+1,9,6,4
+r,a,t,i,n,g, ,2,_,p,e,r,c,e,n,t
+2,.,3,%
+r,a,t,i,n,g, ,1,_,v,o,t,e,s
+5,8,0,5
+r,a,t,i,n,g, ,1,_,p,e,r,c,e,n,t
+6,.,9,%
+imDbId
+tt7462410
+title
+The Wheel of Time
+totalRating
+0
+totalRatingVotes
+84387
+rating 10_votes
+21408
+rating 10_percent
+25.4%
+rating 9_votes
+11874
+rating 9_percent
+14.1%
+rating 8_votes
+16979
+rating 8_percent
+20.1%
+rating 7_votes
+12285
+rating 7_percent
+14.6%
+rating 6_votes
+6209
+rating 6_percent
+7.4%
+rating 5_votes
+3610
+rating 5_percent
+4.3%
+rating 4_votes
+2141
+rating 4_percent
+2.5%
+rating 3_votes
+2112
+rating 3_percent
+2.5%
+rating 2_votes
+1964
+rating 2_percent
+2.3%
+rating 1_votes
+5805
+rating 1_percent
+6.9%
