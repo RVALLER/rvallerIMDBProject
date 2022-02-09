@@ -2,13 +2,13 @@
 import csv
 
 import requests
-import secrets
+import secret
 import pandas as pd
 
 
 def extract():
     # ------------------------------ Part I Start ------------------------------- #
-    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.main()}"
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secret.main()}"
     results = requests.get(url)
 
     if results.status_code != 200:
@@ -24,7 +24,7 @@ def extract():
         f.close()
     # -------------------------------- PART 2 -------------------------------------- #
 
-    loc = f"https://imdb-api.com/en/API/UserRatings/{secrets.main()}/tt7462410"
+    loc = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt7462410"
     res_2 = requests.get(loc)
     data_2 = res_2.json()
     form = pd.DataFrame.from_dict(data_2)  # Creates a dataframe in pandas to extract a single api scrape for csv output
@@ -37,19 +37,19 @@ def extract():
     # top1, top50, top100 and top200 are variables to store api data for ratings
     # forms01-04 are for dataframing the apis and scrapes01-04 are simply to fetch request the data
 
-    top1 = f"https://imdb-api.com/en/API/UserRatings/{secrets.main()}/tt5491994"
+    top1 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt5491994"
     scrape = requests.get(top1)
     data01 = scrape.json()
     form01 = pd.DataFrame.from_dict(data01)
-    top50 = f"https://imdb-api.com/en/API/UserRatings/{secrets.main()}/tt0081834"
+    top50 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt0081834"
     scrape02 = requests.get(top50)
     data02 = scrape02.json()
     form02 = pd.DataFrame.from_dict(data02)
-    top100 = f"https://imdb-api.com/en/API/UserRatings/{secrets.main()}/tt4786824"
+    top100 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt4786824"
     scrape03 = requests.get(top100)
     data03 = scrape03.json()
     form03 = pd.DataFrame.from_dict(data03)
-    top200 = f"https://imdb-api.com/en/API/UserRatings/{secrets.main()}/tt1492966"
+    top200 = f"https://imdb-api.com/en/API/UserRatings/{secret.main()}/tt1492966"
     scrape04 = requests.get(top200)
     data04 = scrape04.json()
     form04 = pd.DataFrame.from_dict(data04)
@@ -67,21 +67,52 @@ def extract():
         form04.to_csv(fii)
         fii.write("\n")
 
+
     # ----------------------------------- Database Portion for Sprint 2 ------------------------
-    flat_dict = {}
-    list(flat_dict) = data01
-    for i in data01['ratings']:
-        data01.append(i)
+    # flat_dict = {}
+    # list(flat_dict) = data01
+    # for i in data01['ratings']:
+    #     data01.append(i)
+    #
+    # print(flat_dict)
+    #
+    # for item in flat_dict:
+    #     rate = item["rating"]
+    #     ratekey = f"{rate}rating"
+    #     percentKey = f"{rate}percent"
+    #     flat_dict[percentKey] = item["percent"]
+    #
+    # print(flat_dict)
 
-    print(flat_dict)
+    sample_dict = {"class": "comp490",
+                   "cap": 24,
+                   "outcomes": [
+                       {"number": 1,
+                        "name": "work in groups",
+                        "origen": "alumni"},
+                       {"number": 2,
+                        "name": "Ethical Dilemmas",
+                        "origen": "Local Hiring Managers"}
+                   ]}
 
-    for item in flat_dict:
-        rate = item["rating"]
-        ratekey = f"{rate}rating"
-        percentKey = f"{rate}percent"
-        flat_dict[percentKey] = item["percent"]
+    def flatten_dict(dictionary_with_list):
+        flat_dict = {}
+        flat_dict['class'] = dictionary_with_list['class']
+        flat_dict['cap'] = dictionary_with_list['cap']
+        for outcome_val in dictionary_with_list["outcomes"]:
+            new_key_base = f"outcome {outcome_val['number']}"
+            name_key = f"{new_key_base}_name"
+            flat_dict[name_key] = outcome_val["name"]
+            origen_key = f"{new_key_base}_origen"
+            flat_dict[origen_key] = outcome_val["origen"]
+        return flat_dict
 
-    print(flat_dict)
+    def main():
+        new_flat_version = flatten_dict(sample_dict)
+        print(new_flat_version)
+
+    if __name__ == '__main__':
+        main()
 
 
 extract()
