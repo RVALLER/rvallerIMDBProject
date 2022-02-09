@@ -58,4 +58,3 @@ def test_dbStuff():
         print("crew= ", row[3], "\n")
     close_db(conn)
 
-test_dbStuff()
