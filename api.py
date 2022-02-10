@@ -31,5 +31,3 @@ def flatten_dict(dictionary_with_list):
         percent_key = f"{new_key_base}_percent"
         flat_dict[percent_key] = ratings_val["percent"]
     return flat_dict
-
-

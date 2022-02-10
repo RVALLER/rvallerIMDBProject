@@ -13,6 +13,3 @@ def extract():
     data_pull = results.json()
     thelist = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
     return thelist
-
-
-
