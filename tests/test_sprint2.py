@@ -9,11 +9,11 @@ def data_scrape():
     results = requests.get(url)
     data_pull = results.json()
     the_list = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
-    return len(the_list)
+    return the_list
 
 
 def test_correct_retrieval():
-    assert data_scrape() == 250
+    assert len(data_scrape()) == 250
 
 
 def test_dbStuff():
