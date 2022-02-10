@@ -1,12 +1,20 @@
 from typing import Tuple
-import test_main
+import requests
+import secrets
 import sqlite3
 
 
 # Works on my machine
 def test_correct_retrieval():
-    result = test_main.extract()
-    assert len(result) == 250
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
+    results = requests.get(url)
+
+    if results.status_code != 200:
+        print("Uh-Oh")
+        return
+    data_pull = results.json()
+    thelist = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
+    assert len(thelist) == 250
 
 
 def test_dbStuff():
