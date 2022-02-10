@@ -44,5 +44,3 @@ def main():
     # new_flat_version5 = flatten_dict(data_5)
     # print(new_flat_version5)
 
-if __name__ == '__main__':
-    main()
