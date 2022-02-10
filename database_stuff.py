@@ -7,8 +7,8 @@ import csv
 
 
 def setup_db(cursor: sqlite3.Cursor):
-    cursor.execute('''CREATE TABLE IF NOT EXISTS headline_data( 
-        id TEXT PRIMARY KEY, 
+    cursor.execute('''CREATE TABLE IF NOT EXISTS headline_data(
+        id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
         full_title TEXT NOT NULL,
         crew TEXT,
