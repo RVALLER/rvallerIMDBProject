@@ -1,7 +1,6 @@
 import requests
 import secrets
 
-
 loc = f"https://imdb-api.com/en/API/UserRatings/{secrets.secret_key}/tt7462410"
 results = requests.get(loc)
 data = results.json()
@@ -32,3 +31,5 @@ def flatten_dict(dictionary_with_list):
         percent_key = f"{new_key_base}_percent"
         flat_dict[percent_key] = ratings_val["percent"]
     return flat_dict
+
+
