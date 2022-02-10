@@ -13,7 +13,11 @@ def data_scrape():
 
 
 def test_correct_retrieval():
-    assert len(data_scrape()) == 250
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
+    results = requests.get(url)
+    data_pull = results.json()
+    the_list = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
+    assert len(the_list) == 250
 
 
 def test_dbStuff():
