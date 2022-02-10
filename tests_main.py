@@ -8,5 +8,3 @@ def data_scrape():
     data_pull = results.json()
     the_list = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
     return len(the_list)
-
-
