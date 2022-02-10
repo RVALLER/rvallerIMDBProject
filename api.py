@@ -1,10 +1,6 @@
-import csv
-
 import requests
 import secrets
-import pandas as pd
-from operator import itemgetter
-# test comment to check workflow
+
 
 loc = f"https://imdb-api.com/en/API/UserRatings/{secrets.secret_key}/tt7462410"
 results = requests.get(loc)
@@ -22,17 +18,17 @@ top200 = f"https://imdb-api.com/en/API/UserRatings/{secrets.secret_key}/tt149296
 results = requests.get(top200)
 data_5 = results.json()
 
+
 def flatten_dict(dictionary_with_list):
     flat_dict = {}
     flat_dict['imDbId'] = dictionary_with_list['imDbId']
-    flat_dict['title']= dictionary_with_list['title']
-    flat_dict['totalRating']= dictionary_with_list['totalRating']
-    flat_dict['totalRatingVotes']= dictionary_with_list['totalRatingVotes']
+    flat_dict['title'] = dictionary_with_list['title']
+    flat_dict['totalRating'] = dictionary_with_list['totalRating']
+    flat_dict['totalRatingVotes'] = dictionary_with_list['totalRatingVotes']
     for ratings_val in dictionary_with_list["ratings"]:
         new_key_base = f"rating {ratings_val['rating']}"
         new_votes_key = f"{new_key_base}_votes"
-        flat_dict[new_votes_key]=ratings_val["votes"]
+        flat_dict[new_votes_key] = ratings_val["votes"]
         percent_key = f"{new_key_base}_percent"
         flat_dict[percent_key] = ratings_val["percent"]
     return flat_dict
-

@@ -1,9 +1,7 @@
 # Start to my IMDB Project
 import csv
-#
 import requests
 import secrets
-import pandas as pd
 
 
 def extract():

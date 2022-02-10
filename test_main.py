@@ -1,9 +1,4 @@
 import requests
-from typing import Tuple
-
-import secret
-import sqlite3
-
 import secrets
 
 
