@@ -36,11 +36,3 @@ def flatten_dict(dictionary_with_list):
         flat_dict[percent_key] = ratings_val["percent"]
     return flat_dict
 
-def main():
-    # new_flat_version1 = flatten_dict(data)
-    # new_flat_version2 = flatten_dict(data_2)
-    # new_flat_version3 = flatten_dict(data_3)
-    # new_flat_version4 = flatten_dict(data_4)
-    # new_flat_version5 = flatten_dict(data_5)
-    # print(new_flat_version5)
-
