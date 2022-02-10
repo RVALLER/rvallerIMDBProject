@@ -2,13 +2,13 @@
 import csv
 #
 import requests
-import secret
+import secrets
 import pandas as pd
 
 
 def extract():
     # ------------------------------ Part I Start ------------------------------- #
-    url = f"https://imdb-api.com/en/API/Top250TVs/{secret.main()}"
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
     results = requests.get(url)
 
     if results.status_code != 200:
@@ -20,7 +20,7 @@ def extract():
 
 
 def output():
-    url = f"https://imdb-api.com/en/API/Top250TVs/{secret.main()}"
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
     results = requests.get(url)
 
     if results.status_code != 200:
