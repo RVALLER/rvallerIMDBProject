@@ -4,6 +4,10 @@ import secrets
 import sqlite3
 
 
+def test_add():
+    assert 2 + 2 == 4
+
+
 def data_scrape():
     url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
     results = requests.get(url)
