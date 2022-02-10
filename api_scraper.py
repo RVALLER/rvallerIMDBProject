@@ -7,7 +7,7 @@ import secrets
 # TEST
 def extract():
     # ------------------------------ Part I Start ------------------------------- #
-    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.API_KEY}"
     results = requests.get(url)
 
     if results.status_code != 200:
@@ -19,7 +19,7 @@ def extract():
 
 
 def output():
-    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.API_KEY}"
     results = requests.get(url)
 
     if results.status_code != 200:

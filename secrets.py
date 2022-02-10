@@ -1,1 +1,1 @@
-secret_key = "k_hwmq4lj0"
+API_KEY = "k_hwmq4lj0"
