@@ -4,10 +4,12 @@ from typing import Tuple
 import secret
 import sqlite3
 
+import secrets
+
 
 def extract():
     # ------------------------------ Part I Start ------------------------------- #
-    url = f"https://imdb-api.com/en/API/Top250TVs/{secret.main()}"
+    url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
     results = requests.get(url)
 
     if results.status_code != 200:
@@ -37,8 +39,8 @@ extract()
 #
 # def populate_tv_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
 #
-#     cursor.execute('''INSERT INTO tv_data (id,title,full_title,crew,year,rating,rating_count) VALUES(?,?,?,?,?,?,?)''',
-#                    test_dict)
+# cursor.execute('''INSERT INTO tv_data (id,title,full_title,crew,year,rating,rating_count) VALUES(?,?,?,?,?,?,?)''',
+# test_dict)
 #
 #     conn.commit()
 #
@@ -69,4 +71,4 @@ extract()
 #         close_db(conn)
 
 
-#main()
+# main()
