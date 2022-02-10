@@ -4,6 +4,7 @@ import test_main
 import sqlite3
 
 
+# Works on my machine
 def test_correct_retrieval():
     result = test_main.extract()
     assert len(result) == 250
