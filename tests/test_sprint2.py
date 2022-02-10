@@ -4,13 +4,16 @@ import secrets
 import sqlite3
 
 
-# Works on my machine
-def test_correct_retrieval():
+def data_scrape():
     url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
     results = requests.get(url)
     data_pull = results.json()
-    thelist = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
-    assert len(thelist) == 250
+    the_list = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
+    return len(the_list)
+
+
+def test_correct_retrieval():
+    assert data_scrape() == 250
 
 
 def test_dbStuff():
