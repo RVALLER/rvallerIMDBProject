@@ -17,6 +17,9 @@ def extract():
     thelist = data_pull['items']  # Takes only the pertinent info from the data scrape and appends to dictionary
     return thelist
 
+
+extract()
+
 #
 # def setup_db(cursor: sqlite3.Cursor):
 #     cursor.execute('''CREATE TABLE IF NOT EXISTS tv_data(id TEXT PRIMARY KEY,
