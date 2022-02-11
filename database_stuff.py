@@ -73,6 +73,7 @@ results = requests.get(top200)
 data_5 = results.json()
 
 
+# Generously gifted flatten dictionary method. Thank you Professor Santore
 def flatten_dict(dictionary_with_list):
     flat_dict = {}
     flat_dict['imDbId'] = dictionary_with_list['imDbId']
@@ -88,6 +89,7 @@ def flatten_dict(dictionary_with_list):
     return flat_dict
 
 
+# Called flatten dictionary to get the proper data extracted from dictionary for 1,50,150,200 and wot.
 new_flat_version1 = flatten_dict(data)
 new_flat_version2 = flatten_dict(data_2)
 new_flat_version3 = flatten_dict(data_3)
@@ -111,6 +113,8 @@ def get_data():
     return top250
 
 
+# This was taken from my comp390 project. this is why I mentioned I output top 250 to csv. :)
+# This gets data of top 250 from the csv, stores instances of its id to a key variable and extracts proper parameters
 def populate_headline_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
     top250 = get_data()
     keys = top250['id'].tolist()
@@ -131,6 +135,7 @@ def populate_headline_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
         conn.commit()
 
 
+# A bunch of ugly but effective calls to flatten the flattened dictionary for easier db output.
 l1 = list(new_flat_version1.items())
 count = 0
 l11 = []
@@ -167,6 +172,7 @@ while count < len(l5):
     count += 1
 
 
+# Self-explanatory insert statements into db for ratings data
 def populate_ratings_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
     cursor.executemany('''INSERT INTO ratings_data VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (l11,))
     conn.commit()
@@ -180,6 +186,7 @@ def populate_ratings_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
     conn.commit()
 
 
+# the main that makes the code go woosh.
 def main():
     name = 'movie_api.db'
     conn, cursor = open_db(name)
