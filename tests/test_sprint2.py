@@ -4,10 +4,12 @@ import secrets
 import sqlite3
 
 
+# basic test to make sure I had tests working
 def test_add():
     assert 2 + 2 == 4
 
 
+# This is a function to pull the list needed for  correct retrieval method
 def data_scrape():
     url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.API_KEY}"
     results = requests.get(url)
@@ -16,6 +18,7 @@ def data_scrape():
     return the_list
 
 
+# This test made sure my method for scraping top 250 worked by applying a spliced version of the original.
 def test_correct_retrieval():
     url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.API_KEY}"
     results = requests.get(url)
@@ -26,6 +29,8 @@ def test_correct_retrieval():
     assert item == 250
 
 
+# Bear with me, I know its grotesque, but this method tests out my datbase creation methods by feeding some dummy
+# data to a dummy database. I know, I shouldn't call them names. Comes with all of dbstuff.py's bells and whistles
 def test_dbStuff():
     def setup_db(curs: sqlite3.Cursor):
         curs.execute('''CREATE TABLE IF NOT EXISTS tv_data(id TEXT PRIMARY KEY,
