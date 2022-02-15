@@ -194,21 +194,18 @@ def populate_movie250(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
         conn.commit()
 
 
-# def biglow_updown(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
-#     cursor.execute("""SELECT * FROM pop_movies WHERE rankUpDown """)
-
-
 def main():
     pop_csv()
     name = 'movie_api.db'
     conn, cursor = open_db(name)
     db_setter(cursor)
-    # populate_movie250(cursor, conn)
-    # populate_pop_movies(cursor, conn)
-    # populate_pop_shows(cursor, conn)
+    populate_movie250(cursor, conn)
+    populate_pop_movies(cursor, conn)
+    populate_pop_shows(cursor, conn)
     populate_rankUpDown(cursor, conn)
     conn.commit()
     close_db(conn)
 
 
 main()
+

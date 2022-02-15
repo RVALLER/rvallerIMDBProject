@@ -116,16 +116,16 @@ def get_data():
 # This was taken from my comp390 project. this is why I mentioned I output top 250 to csv. :)
 # This gets data of top 250 from the csv, stores instances of its id to a key variable and extracts proper parameters
 def populate_headline_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
-    top250 = get_data()
-    keys = top250['id'].tolist()
+    ratings = get_data()
+    keys = ratings['id'].tolist()
     data_dict = {}
     for item in keys:
-        data_dict[item] = (top250.loc[top250['id'] == item]['title'].tolist()[0],
-                           top250.loc[top250['id'] == item]['fullTitle'].tolist()[0],
-                           top250.loc[top250['id'] == item]['crew'].tolist()[0],
-                           top250.loc[top250['id'] == item]['year'].tolist()[0],
-                           top250.loc[top250['id'] == item]['imDbRating'].tolist()[0],
-                           top250.loc[top250['id'] == item]['imDbRatingCount'].tolist()[0])
+        data_dict[item] = (ratings.loc[ratings['id'] == item]['title'].tolist()[0],
+                           ratings.loc[ratings['id'] == item]['fullTitle'].tolist()[0],
+                           ratings.loc[ratings['id'] == item]['crew'].tolist()[0],
+                           ratings.loc[ratings['id'] == item]['year'].tolist()[0],
+                           ratings.loc[ratings['id'] == item]['imDbRating'].tolist()[0],
+                           ratings.loc[ratings['id'] == item]['imDbRatingCount'].tolist()[0])
 
     for key in data_dict.keys():
         cursor.execute("""INSERT INTO headline_data (id, title, full_title, crew, year, rating, rating_count)
