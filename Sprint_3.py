@@ -39,7 +39,7 @@ def db_setter(cursor: sqlite3.Cursor):
     cursor.execute('''CREATE TABLE IF NOT EXISTS pop_shows(
         id TEXT PRIMARY KEY,
         rank TEXT,
-        rankUpDown TEXT,
+        rankUpDown FLOAT,
         title TEXT,
         fullTitle INTEGER,
         year FLOAT DEFAULT 0,
@@ -62,12 +62,12 @@ def db_setter(cursor: sqlite3.Cursor):
             full_title TEXT
             imDbRating
             imDbRatingCount FLOAT DEFAULT 0,
-            rankUpDown);''')
+            rankUpDown FLOAT DEFAULT 0);''')
 
     cursor.execute('''CREATE TABLE IF NOT EXISTS pop_movies(
             id TEXT PRIMARY KEY,
             rank TEXT,
-            rankUpDown TEXT,
+            rankUpDown FLOAT,
             title TEXT,
             fullTitle INTEGER,
             year FLOAT DEFAULT 0,
@@ -134,6 +134,22 @@ def populate_pop_shows(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
         conn.commit()
 
 
+def populate_rankUpDown(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
+    cursor.execute(f"""INSERT INTO movie_upDownTrend
+                   SELECT id, title, rankUpDown
+                   FROM pop_movies
+                   ORDER BY rankUpDown DESC
+                   LIMIT 3""")
+
+    cursor.execute(f"""INSERT INTO movie_upDownTrend
+                       SELECT id, title, rankUpDown
+                       FROM pop_movies
+                       ORDER BY rankUpDown ASC
+                       LIMIT 1""")
+    conn.commit()
+
+
+
 def populate_pop_movies(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
     pop_movies = get_data03()
     kii = pop_movies['id'].tolist()
@@ -178,14 +194,19 @@ def populate_movie250(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
         conn.commit()
 
 
+# def biglow_updown(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
+#     cursor.execute("""SELECT * FROM pop_movies WHERE rankUpDown """)
+
+
 def main():
     pop_csv()
     name = 'movie_api.db'
     conn, cursor = open_db(name)
     db_setter(cursor)
-    populate_movie250(cursor, conn)
-    populate_pop_movies(cursor,conn)
-    populate_pop_shows(cursor, conn)
+    # populate_movie250(cursor, conn)
+    # populate_pop_movies(cursor, conn)
+    # populate_pop_shows(cursor, conn)
+    populate_rankUpDown(cursor, conn)
     conn.commit()
     close_db(conn)
 
