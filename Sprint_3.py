@@ -126,7 +126,7 @@ def populate_pop_shows(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
                            head_d.loc[head_d['id'] == item]['imDbRatingCount'].tolist()[0])
 
     for key in data_dict.keys():
-        cursor.execute("""INSERT INTO pop_shows (id, rank, rankUpDown, title, fulLTitle, crew, year, imDbRating, 
+        cursor.execute("""INSERT INTO pop_shows (id, rank, rankUpDown, title, fulLTitle, crew, year, imDbRating,
         imDbRatingCount) VALUES (?,?,?,?,?,?,?,?,?)""", (key, data_dict[key][0], data_dict[key][1],
                                                          data_dict[key][2], data_dict[key][3],
                                                          data_dict[key][4], data_dict[key][5],
@@ -164,7 +164,7 @@ def populate_pop_movies(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
                              pop_movies.loc[pop_movies['id'] == item]['imDbRatingCount'].tolist()[0])
 
     for key in data_dict02.keys():
-        cursor.execute("""INSERT INTO pop_movies (id, rank, rankUpDown, title, fulLTitle, crew, year, imDbRating, 
+        cursor.execute("""INSERT INTO pop_movies (id, rank, rankUpDown, title, fulLTitle, crew, year, imDbRating,
         imDbRatingCount) VALUES (?,?,?,?,?,?,?,?,?)""", (key, data_dict02[key][0], data_dict02[key][1],
                                                          data_dict02[key][2], data_dict02[key][3],
                                                          data_dict02[key][4], data_dict02[key][5],
