@@ -135,19 +135,18 @@ def populate_pop_shows(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
 
 
 def populate_rankUpDown(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
-    cursor.execute(f"""INSERT INTO movie_upDownTrend
+    cursor.execute("""INSERT INTO movie_upDownTrend
                    SELECT id, title, rankUpDown
                    FROM pop_movies
                    ORDER BY rankUpDown DESC
                    LIMIT 3""")
 
-    cursor.execute(f"""INSERT INTO movie_upDownTrend
+    cursor.execute("""INSERT INTO movie_upDownTrend
                        SELECT id, title, rankUpDown
                        FROM pop_movies
                        ORDER BY rankUpDown ASC
                        LIMIT 1""")
     conn.commit()
-
 
 
 def populate_pop_movies(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
@@ -208,4 +207,3 @@ def main():
 
 
 main()
-
