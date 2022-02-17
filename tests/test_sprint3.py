@@ -41,7 +41,6 @@ def new_table(cursor: sqlite3.Cursor):
     cursor.execute('''INSERT INTO rankUpDown_dummy(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_d)
 
 
-def test_newTable():
+def test_check_newTable():
     curs, conn = open_db("dummy.db")
-
 
