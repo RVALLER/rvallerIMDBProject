@@ -60,16 +60,47 @@ def test_dbStuff():
         connection.commit()  # make sure any changes get saved
         connection.close()
 
-    name = 'dummy.db'
-    conn, cursor = open_db(name)
-    setup_db(cursor)
-    populate_tv_data(cursor, conn)
-    conn.commit()
-    cursor.execute('''SELECT id FROM tv_data''')
-    res = cursor.fetchall()
-    assert len(res) == 1
-    cursor.execute(''' SELECT title FROM tv_data''')
-    results = cursor.fetchall()
-    test_record = results[0]
-    assert test_record[0] == 'Test Data On Ice'
-    close_db(conn)
+    def test_correct_new_table(curs: sqlite3.Cursor):
+        curs.execute('''CREATE TABLE IF NOT EXISTS dummy_pop(
+                    id TEXT PRIMARY KEY,
+                    rank TEXT,
+                    rankUpDown FLOAT,
+                    title TEXT,
+                    fullTitle INTEGER,
+                    year FLOAT DEFAULT 0,
+                    crew TEXT,
+                    imDbRating TEXT,
+                    imDbRatingCount FLOAT DEFAULT 0);''')
+
+        curs.execute('''CREATE TABLE IF NOT EXISTS rankUpDown_dummy(
+                    id TEXT PRIMARY KEY,
+                    title TEXT,
+                    rankUpDown FLOAT);''')
+
+        test_dict_a = ['tt3723822', "Test Data on", "+100"]
+        test_dict_b = ['tt3793822', "Test Data on 2", "-1000"]
+        test_dict_c = ['tt3733822', "Test Data on 3", "+10"]
+        test_dict_d = ['tt3713822', "Test Data From Hell", "+1000"]
+
+        curs.execute('''INSERT INTO rankUpDown_dummy(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_a)
+        curs.execute('''INSERT INTO rankUpDown_dummy(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_b)
+        curs.execute('''INSERT INTO rankUpDown_dummy(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_c)
+        curs.execute('''INSERT INTO rankUpDown_dummy(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_d)
+
+        name = 'dummy.db'
+        conn, cursor = open_db(name)
+        setup_db(cursor)
+        populate_tv_data(cursor, conn)
+        conn.commit()
+        cursor.execute('''SELECT id FROM tv_data''')
+        res = cursor.fetchall()
+        assert len(res) == 1
+        # test_correct_new_table(cursor)
+        # cursor.execute('''SELECT id from rankUpDown_dummy''')
+        # tst = cursor.fetchall()
+        # assert len(tst) == 4
+        cursor.execute(''' SELECT title FROM tv_data''')
+        results = cursor.fetchall()
+        test_record = results[0]
+        assert test_record[0] == 'Test Data On Ice'
+        close_db(conn)
