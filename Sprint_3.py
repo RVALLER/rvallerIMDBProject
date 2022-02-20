@@ -73,7 +73,9 @@ def db_setter(cursor: sqlite3.Cursor):
             year FLOAT DEFAULT 0,
             crew TEXT,
             imDbRating TEXT,
-            imDbRatingCount FLOAT DEFAULT 0);''')
+            imDbRatingCount FLOAT DEFAULT 0,
+            FOREIGN KEY (id) REFERENCES movie_headlines (id)
+            ON DELETE CASCADE ON UPDATE NO ACTION);''')
 
 
 def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:

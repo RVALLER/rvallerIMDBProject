@@ -28,7 +28,14 @@ def new_table(cursor: sqlite3.Cursor):
     cursor.execute('''CREATE TABLE IF NOT EXISTS rankUpDown_dummy(
                    id TEXT PRIMARY KEY,
                    title TEXT,
-                   rankUpDown FLOAT);''')
+                   rankUpDown FLOAT,
+                   FOREIGN KEY (id) REFERENCES movie_headlines (id)
+                   ON DELETE CASCADE ON UPDATE NO ACTION);''')
+
+    cursor.execute('''CREATE TABLE IF NOT EXISTS dummy_top200(
+                    id TEXT PRIMARY KEY,
+                    rank TEXT,
+                    title TEXT);''')
 
     test_dict_a = ['tt3723822', "Test Data on", 100]
     test_dict_b = ['tt3793822', "Test Data on 2", -1000]
@@ -36,6 +43,9 @@ def new_table(cursor: sqlite3.Cursor):
     test_dict_d = ['tt3713822', "Test Data From Hell", 1000]
     test_dict_e = ['tt3401320', "Back to the Data Again", -10]
 
+    cursor.execute('''INSERT INTO dummy_top200(id,rank,title) VALUES(?,?,?)''', test_dict_a)
+    cursor.execute('''INSERT INTO dummy_top200(id,rank,title) VALUES(?,?,?)''', test_dict_d)
+    cursor.execute('''INSERT INTO dummy_top200(id,rank,title) VALUES(?,?,?)''', test_dict_e)
     cursor.execute('''INSERT INTO dummy_pop(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_a)
     cursor.execute('''INSERT INTO dummy_pop(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_b)
     cursor.execute('''INSERT INTO dummy_pop(id,title,rankUpDown) VALUES(?,?,?)''', test_dict_c)
@@ -63,9 +73,15 @@ def test_check_newTable():
     conn, curs = open_db("dummy.db")
     new_table(curs)
     curs.execute('''SELECT tbl_name FROM sqlite_master WHERE type='table'
-                 AND tbl_name = 'rankUpDown_dummy'   ; ''')
+                 AND tbl_name = 'rankUpDown_dummy'; ''')
     x = curs.fetchone()
     assert len(x) != 0
+    curs.execute('''SELECT t.id, t.title
+                    FROM dummy_top200 t
+                    INNER JOIN dummy_pop p
+                    WHERE t.id = p.id ''')
+    contain01 = curs.fetchall()
+    assert len(contain01) != 0
 
 
 def test_check_write():
@@ -88,3 +104,4 @@ def test_upDownChance():
     curs.execute('''SELECT rankUpDown from rankUpDown_dummy''')
     fetcher = curs.fetchall()
     assert len(fetcher) == 4
+
