@@ -9,10 +9,21 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import data_viz
+import update_data
+from data_viz import vizmain
 
 
-class Ui_Dialog(object):
+class mainwin(object):
+    def openWindow(self):
+        self.window = QtWidgets.QDialog()
+        self.ui = data_viz.vizmain()
+        self.ui.setupViz(self.window)
+        self.window.show()
+
     def __init__(self):
+        self.ui = None
+        self.window = None
         self.viz_main = None
         self.upD = None
         self.label = None
@@ -60,14 +71,3 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "Please Select One of the Following:"))
         self.upD.setText(_translate("Dialog", "Update Data"))
         self.viz_main.setText(_translate("Dialog", "Visualize Data"))
-
-
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())

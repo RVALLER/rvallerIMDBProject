@@ -194,7 +194,7 @@ def main():
     populate_ratings_data(cursor, conn)
     populate_headline_data(cursor, conn)
     conn.commit()
-    close_db(conn)
+
 
 
 main()

@@ -4,6 +4,8 @@ import sqlite3
 import pandas as pd
 import csv
 from typing import Tuple
+import database_stuff
+
 
 loc = f"https://imdb-api.com/en/API/MostPopularTVs/{secrets.API_KEY}"
 res = requests.get(loc)
@@ -195,10 +197,45 @@ def populate_movie250(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
         conn.commit()
 
 
+def janitorial(cursor: sqlite3.Cursor):
+    try:
+        cursor.execute("""
+                       DROP TABLE IF EXISTS pop_shows;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS pop_movies;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS movie_upDownTrend;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS headline_data;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS movie_headlines;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS ratings_data;
+                       """)
+
+    except sqlite3.Error:
+        print("Un-cleanable Mess")
+    finally:
+        print("Done")
+
+
 def main():
     pop_csv()
     name = 'movie_api.db'
     conn, cursor = open_db(name)
+    janitorial(cursor)
+    conn.commit()
+    database_stuff.main()
     db_setter(cursor)
     populate_movie250(cursor, conn)
     populate_pop_movies(cursor, conn)

@@ -9,23 +9,38 @@ from PyQt5 import QtGui, QtSql
 import functools
 
 
+def goviz():
+    viz_main = vizdata()
+    widget.setCurrentWidget(widget.setCurrentIndex(1))
+    viz_main.show()
+
+
 class mainwin(QDialog):
     def __init__(self):
         super(mainwin, self).__init__()
-        loadUi("main_screen.ui", self)
+        loadUi("main_win.ui", self)
+        self.viz_main.clicked.connect(self.gotoviz)
+
+    def gotoviz(self):
+        vizmain = vizdata()
+        widget.addWidget(vizmain)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
-class vizMain(QDialog):
+class vizdata(QDialog):
     def __init__(self):
-        super(vizMain, self).__init__()
+        super(vizdata, self).__init__()
         loadUi("data_vizMain.ui", self)
 
+
+class update_data(QDialog):
+    def __init__(self):
+        super(update_data, self).__init__()
 
 
 # main
 app = QApplication(sys.argv)
 mains = mainwin()
-vizmain = vizMain()
 widget = QStackedWidget()
 widget.addWidget(mains)
 widget.setFixedHeight(800)

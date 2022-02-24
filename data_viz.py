@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_dialog(object):
+class vizmain(object):
     def __init__(self):
         self.pushButton_6 = None
         self.pushButton_5 = None
@@ -24,16 +24,16 @@ class Ui_dialog(object):
         self.pushButton = None
         self.data_viz = None
 
-    def setupUi(self, dialog):
-        dialog.setObjectName("dialog")
+    def setupViz(self, dialog):
+        dialog.setObjectName("dviz")
         dialog.resize(1155, 810)
         dialog.setStyleSheet("")
         self.data_viz = QtWidgets.QWidget(dialog)
         self.data_viz.setGeometry(QtCore.QRect(-50, 10, 1200, 800))
         self.data_viz.setStyleSheet("QWidget#data_viz{\n"
-                                    "    font: 16pt \"MS Shell Dlg 2\";\n"
-                                    "background-color:qlineargradient(spread:pad, x1:0, y1:0.00545455, x2:1, y2:1, "
-                                    "stop:0 rgba(145, 135, 165, 255), "
+                                    "font: 16pt \"MS Shell Dlg 2\";\n"
+                                    "background-color:qlineargradient(spread:pad, x1:0, y1:0.00545455, x2:1, y2:1,"
+                                    "stop:0 rgba(145, 135, 165, 255),"
                                     "stop:1 rgba(255, 255, 255, 255))}")
         self.data_viz.setObjectName("data_viz")
         self.welcome = QtWidgets.QLabel(self.data_viz)
@@ -53,8 +53,8 @@ class Ui_dialog(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.data_viz)
         self.pushButton_2.setGeometry(QtCore.QRect(480, 230, 251, 51))
         self.pushButton_2.setStyleSheet("border-radius:20px;\n"
-                                        "background-color: rgb(219, 212, 255);\n"
-                                        "font: 12pt \"MS Shell Dlg 2\";")
+                                        "background-color:rgb(219, 212, 255);\n"
+                                        "font:12pt\"MS Shell Dlg 2\";")
         self.pushButton_2.setObjectName("pushButton_2")
         self.label_2 = QtWidgets.QLabel(self.data_viz)
         self.label_2.setGeometry(QtCore.QRect(510, 310, 201, 41))
@@ -104,10 +104,10 @@ class Ui_dialog(object):
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     dialog = QtWidgets.QDialog()
-    ui = Ui_dialog()
-    ui.setupUi(dialog)
+    ui = vizmain()
+    ui.setupViz(dialog)
     dialog.show()
     sys.exit(app.exec_())
+
