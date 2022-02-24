@@ -104,4 +104,3 @@ def test_upDownChance():
     curs.execute('''SELECT rankUpDown from rankUpDown_dummy''')
     fetcher = curs.fetchall()
     assert len(fetcher) == 4
-
