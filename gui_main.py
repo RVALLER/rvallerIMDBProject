@@ -7,12 +7,8 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtSql
 import functools
-
-
-def goviz():
-    viz_main = vizdata()
-    widget.setCurrentWidget(widget.setCurrentIndex(1))
-    viz_main.show()
+import sqlite3
+from Sprint_3 import pop_all, empty_all
 
 
 class mainwin(QDialog):
@@ -20,11 +16,20 @@ class mainwin(QDialog):
         super(mainwin, self).__init__()
         loadUi("main_win.ui", self)
         self.viz_main.clicked.connect(self.gotoviz)
+        self.upD.clicked.connect(self.update_data)
 
     def gotoviz(self):
         vizmain = vizdata()
         widget.addWidget(vizmain)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def update_data(self):
+        message = QMessageBox(self)
+        message.setText("Database Updated. For More fun, Select 'Visualize Data' ")
+        message.setWindowTitle("Data Manager")
+        message.show()
+        empty_all()
+        pop_all()
 
 
 class vizdata(QDialog):
@@ -33,10 +38,6 @@ class vizdata(QDialog):
         loadUi("data_vizMain.ui", self)
 
 
-class update_data(QDialog):
-    def __init__(self):
-        super(update_data, self).__init__()
-
 
 # main
 app = QApplication(sys.argv)
@@ -44,6 +45,6 @@ mains = mainwin()
 widget = QStackedWidget()
 widget.addWidget(mains)
 widget.setFixedHeight(800)
-widget.setFixedWidth(1200)
+widget.setFixedWidth(990)
 widget.show()
 app.exec_()

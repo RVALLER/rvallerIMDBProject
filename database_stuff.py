@@ -135,45 +135,43 @@ def populate_headline_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
         conn.commit()
 
 
-# A bunch of ugly but effective calls to flatten the flattened dictionary for easier db output.
-l1 = list(new_flat_version1.items())
-count = 0
-l11 = []
-while count < len(l1):
-    l11.append(l1[count][1])
-    count += 1
-
-l2 = list(new_flat_version2.items())
-count = 0
-l22 = []
-while count < len(l1):
-    l22.append(l2[count][1])
-    count += 1
-
-l3 = list(new_flat_version3.items())
-count = 0
-l33 = []
-while count < len(l1):
-    l33.append(l3[count][1])
-    count += 1
-
-l4 = list(new_flat_version4.items())
-count = 0
-l44 = []
-while count < len(l4):
-    l44.append(l4[count][1])
-    count += 1
-
-l5 = list(new_flat_version5.items())
-count = 0
-l55 = []
-while count < len(l5):
-    l55.append(l5[count][1])
-    count += 1
-
-
 # Self-explanatory insert statements into db for ratings data
 def populate_ratings_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
+    # A bunch of ugly but effective calls to flatten the flattened dictionary for easier db output.
+    l1 = list(new_flat_version1.items())
+    count = 0
+    l11 = []
+    while count < len(l1):
+        l11.append(l1[count][1])
+        count += 1
+
+    l2 = list(new_flat_version2.items())
+    count = 0
+    l22 = []
+    while count < len(l1):
+        l22.append(l2[count][1])
+        count += 1
+
+    l3 = list(new_flat_version3.items())
+    count = 0
+    l33 = []
+    while count < len(l1):
+        l33.append(l3[count][1])
+        count += 1
+
+    l4 = list(new_flat_version4.items())
+    count = 0
+    l44 = []
+    while count < len(l4):
+        l44.append(l4[count][1])
+        count += 1
+
+    l5 = list(new_flat_version5.items())
+    count = 0
+    l55 = []
+    while count < len(l5):
+        l55.append(l5[count][1])
+        count += 1
     cursor.executemany('''INSERT INTO ratings_data VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (l11,))
     conn.commit()
     cursor.executemany('''INSERT INTO ratings_data VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (l22,))
@@ -186,15 +184,46 @@ def populate_ratings_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
     conn.commit()
 
 
+def janitorial(cursor: sqlite3.Cursor):
+    try:
+        cursor.execute("""
+                       DROP TABLE IF EXISTS pop_shows;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS pop_movies;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS movie_upDownTrend;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS headline_data;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS movie_headlines;
+                       """)
+
+        cursor.execute("""
+                       DROP TABLE IF EXISTS ratings_data;
+                       """)
+
+    except sqlite3.Error:
+        print("Un-cleanable Mess")
+
+
 # the main that makes the code go woosh.
 def main():
     name = 'movie_api.db'
     conn, cursor = open_db(name)
+    janitorial(cursor)
     setup_db(cursor)
     populate_ratings_data(cursor, conn)
     populate_headline_data(cursor, conn)
     conn.commit()
 
 
-
-main()
+if __name__ == '__main__':
+    main()

@@ -4,37 +4,45 @@ import sqlite3
 import pandas as pd
 import csv
 from typing import Tuple
-import database_stuff
+from database_stuff import populate_ratings_data, populate_headline_data
 
 
-loc = f"https://imdb-api.com/en/API/MostPopularTVs/{secrets.API_KEY}"
-res = requests.get(loc)
-data01 = res.json()
-dlist = data01['items']
+def setup_csv():
+    loc = f"https://imdb-api.com/en/API/MostPopularTVs/{secrets.API_KEY}"
+    res = requests.get(loc)
+    data01 = res.json()
+    dlist = data01['items']
 
-loc_2 = f"https://imdb-api.com/en/API/Top250Movies/{secrets.API_KEY}"
-res_2 = requests.get(loc_2)
-data02 = res_2.json()
-dlist02 = data02['items']
-keyz = dlist02[0].keys()  # Extracts the row/column headers for use in file (e.g: id, rating, etc. )
+    loc_2 = f"https://imdb-api.com/en/API/Top250Movies/{secrets.API_KEY}"
+    res_2 = requests.get(loc_2)
+    data02 = res_2.json()
+    dlist02 = data02['items']
+    keyz = dlist02[0].keys()  # Extracts the row/column headers for use in file (e.g: id, rating, etc. )
 
-loc_3 = f"https://imdb-api.com/en/API/MostPopularMovies/{secrets.API_KEY}"
-res_3 = requests.get(loc_3)
-data03 = res_3.json()
-dlist03 = data03['items']
-ki = dlist03[0].keys()
+    loc_3 = f"https://imdb-api.com/en/API/MostPopularMovies/{secrets.API_KEY}"
+    res_3 = requests.get(loc_3)
+    data03 = res_3.json()
+    dlist03 = data03['items']
+    ki = dlist03[0].keys()
 
-with open("output2.csv", 'w') as f:
-    dict_writer = csv.DictWriter(f, keyz)  # Uses the dictionary writer of csv mod to write the row titles to file
-    dict_writer.writeheader()  # Uses the csv python module to write the keys from dictionary to csv
-    dict_writer.writerows(dlist02)
-    f.close()
+    with open("output2.csv", 'w') as f:
+        dict_writer = csv.DictWriter(f, keyz)  # Uses the dictionary writer of csv mod to write the row titles to file
+        dict_writer.writeheader()  # Uses the csv python module to write the keys from dictionary to csv
+        dict_writer.writerows(dlist02)
+        f.close()
 
-with open("output3.csv", 'w') as f:
-    dict_writer = csv.DictWriter(f, ki)  # Uses the dictionary writer of csv mod to write the row titles to file
-    dict_writer.writeheader()  # Uses the csv python module to write the keys from dictionary to csv
-    dict_writer.writerows(dlist03)
-    f.close()
+    with open("output3.csv", 'w') as f:
+        dict_writer = csv.DictWriter(f, ki)  # Uses the dictionary writer of csv mod to write the row titles to file
+        dict_writer.writeheader()  # Uses the csv python module to write the keys from dictionary to csv
+        dict_writer.writerows(dlist03)
+        f.close()
+
+    with open("output.csv", 'w') as f:
+        keys = dlist[0].keys()
+        dict_writer = csv.DictWriter(f, keys)  # Uses the dictionary writer of csv mod to write the row titles to file
+        dict_writer.writeheader()  # Uses the csv python module to write the keys from dictionary to csv
+        dict_writer.writerows(dlist)
+        f.close()
 
 
 def db_setter(cursor: sqlite3.Cursor):
@@ -79,6 +87,43 @@ def db_setter(cursor: sqlite3.Cursor):
             FOREIGN KEY (id) REFERENCES movie_headlines (id)
             ON DELETE CASCADE ON UPDATE NO ACTION);''')
 
+    cursor.execute('''CREATE TABLE IF NOT EXISTS headline_data(
+            id TEXT PRIMARY KEY,
+            title TEXT NOT NULL,
+            full_title TEXT NOT NULL,
+            crew TEXT,
+            year INTEGER NOT NULL,
+            rating FLOAT DEFAULT 0,
+            rating_count FLOAT DEFAULT 0);''')
+
+    cursor.execute('''CREATE TABLE IF NOT EXISTS ratings_data(
+            id TEXT NOT NULL,
+            Title TEXT NOT NULL,
+            total_rating INTEGER NOT NULL,
+            rating_votes TEXT NOT NULL,
+            TenRateVotes INTEGER NOT NULL,
+            TenRatingPercent FLOAT NOT NULL,
+            NineRatingVotes INTEGER NOT NULL,
+            NineRatingPercent INTEGER NOT NULL,
+            EightRatingVotes FLOAT NOT NULL,
+            EightRatePercent INTEGER NOT NULL,
+            SevenRateVotes FLOAT NOT NULL,
+            SevenRatePercent INTEGER NOT NULL,
+            SixRatingVotes FLOAT NOT NULL,
+            SixRatePercent INTEGER NOT NULL,
+            FiveRatingVotes FLOAT NOT NULL,
+            FiveRatePercent INTEGER NOT NULL,
+            FourRatingVotes FLOAT NOT NULL,
+            FourRatingPercent INTEGER NOT NULL,
+            ThreeRatingVotes FLOAT NOT NULL,
+            ThreeRatingPercent INTEGER NOT NULL,
+            TwoRatingVotes FLOAT NOT NULL,
+            TwoRatingPercent INTEGER NOT NULL,
+            OneRatingVotes FLOAT NOT NULL,
+            OneRatingPercent INTEGER NOT NULL,
+            FOREIGN KEY (id) REFERENCES headline_data (id)
+            ON DELETE CASCADE ON UPDATE NO ACTION);''')
+
 
 def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     db_connection = sqlite3.connect(filename)  # connect to existing DB or create new one
@@ -89,15 +134,6 @@ def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
 def close_db(connection: sqlite3.Connection):
     connection.commit()  # make sure any changes get saved
     connection.close()
-
-
-def pop_csv():
-    with open("output.csv", 'w') as f:
-        keys = dlist[0].keys()
-        dict_writer = csv.DictWriter(f, keys)  # Uses the dictionary writer of csv mod to write the row titles to file
-        dict_writer.writeheader()  # Uses the csv python module to write the keys from dictionary to csv
-        dict_writer.writerows(dlist)
-        f.close()
 
 
 def get_data():
@@ -225,18 +261,15 @@ def janitorial(cursor: sqlite3.Cursor):
 
     except sqlite3.Error:
         print("Un-cleanable Mess")
-    finally:
-        print("Done")
 
 
-def main():
-    pop_csv()
+def pop_all():
+    setup_csv()
     name = 'movie_api.db'
     conn, cursor = open_db(name)
-    janitorial(cursor)
-    conn.commit()
-    database_stuff.main()
     db_setter(cursor)
+    populate_ratings_data(cursor, conn)
+    populate_headline_data(cursor, conn)
     populate_movie250(cursor, conn)
     populate_pop_movies(cursor, conn)
     populate_pop_shows(cursor, conn)
@@ -245,4 +278,29 @@ def main():
     close_db(conn)
 
 
-main()
+def empty_all():
+    name = 'movie_api.db'
+    conn, cursor = open_db(name)
+    janitorial(cursor)
+    conn.commit()
+    close_db(conn)
+
+
+def main():
+    setup_csv()
+    name = 'movie_api.db'
+    conn, cursor = open_db(name)
+    janitorial(cursor)
+    db_setter(cursor)
+    populate_ratings_data(cursor,conn)
+    populate_headline_data(cursor, conn)
+    populate_movie250(cursor, conn)
+    populate_pop_movies(cursor, conn)
+    populate_pop_shows(cursor, conn)
+    populate_rankUpDown(cursor, conn)
+    conn.commit()
+    close_db(conn)
+
+
+if __name__ == '__main__':
+    main()
