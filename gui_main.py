@@ -1,14 +1,8 @@
 import sqlite3
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QDialog, QMainWindow, QPushButton, QLabel, QMessageBox, \
-    QStackedWidget
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QDialog, QMessageBox, QApplication, QStackedWidget
 from PyQt5.uic import loadUi
-from PyQt5 import QtWidgets
-from PyQt5 import QtGui, QtSql
-import functools
-import sqlite3
-from Sprint_3 import pop_all, empty_all
+from Sprint_3 import pop_all, empty_all, open_db, close_db
 
 
 class mainwin(QDialog):
@@ -32,11 +26,31 @@ class mainwin(QDialog):
         pop_all()
 
 
+class Mov_overlap(QDialog):
+    def __init__(self):
+        super(Mov_overlap, self).__init__()
+
+        self.topop_mov.clicked.connect(self.goto_movOverlap)
+        loadUi("top_movOverlap.ui", self)
+        name = 'movie_api.db'
+        conn, cursor = open_db(name)
+        cursor.execute('''SELECT
+        fullTitle,rating,rating_count,rankUpDown FROM
+        movie_headlines h
+        INNER JOIN pop_movies p
+        ON h.id = p.id''')
+        self.mov_overlaps.setRowCount(0)
+
+    def goto_movOverlap(self):
+        m_over = Mov_overlap()
+        widget.addWidget(m_over)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+
 class vizdata(QDialog):
     def __init__(self):
         super(vizdata, self).__init__()
         loadUi("data_vizMain.ui", self)
-
 
 
 # main
@@ -44,7 +58,7 @@ app = QApplication(sys.argv)
 mains = mainwin()
 widget = QStackedWidget()
 widget.addWidget(mains)
-widget.setFixedHeight(800)
-widget.setFixedWidth(990)
+widget.setFixedHeight(811)
+widget.setFixedWidth(1261)
 widget.show()
 app.exec_()
