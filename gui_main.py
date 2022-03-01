@@ -1,23 +1,35 @@
-import sqlite3
 import sys
-from PyQt5.QtWidgets import QDialog, QMessageBox, QApplication, QStackedWidget, QTableWidgetItem, QTableView, \
-    QListWidget, QListWidgetItem
-from PyQt5.uic import loadUi
-
 from Sprint_3 import pop_all, empty_all, open_db, close_db
+import PySide6
+from PySide6.QtWidgets import QWidget, QPushButton, QListWidget, QApplication, QListWidgetItem, QMessageBox
 
 
-class mainwin(QDialog):
+class main_menu(QWidget):
     def __init__(self):
-        super(mainwin, self).__init__()
-        loadUi("main_win.ui", self)
-        self.viz_main.clicked.connect(self.gotoviz)
-        self.upD.clicked.connect(self.update_data)
+        super().__init__()
+        self.new_wind = None
+        self.go_visualize_d()
+        self.setup_window()
 
-    def gotoviz(self):
-        vizmain = vizdata()
-        widget.addWidget(vizmain)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def setup_window(self):
+        self.setWindowTitle("IMD-Data Main Menu")
+        # display_list = QListWidget(self)
+        self.setGeometry(300, 100, 1150, 900)
+        quit_button = QPushButton("Quit Now", self)
+        quit_button.clicked.connect(QApplication.instance().quit)
+        quit_button.resize(quit_button.sizeHint())
+        quit_button.move(900, 850)
+
+        update_data_button = QPushButton("Update Data", self)
+        update_data_button.clicked.connect(self.update_data)
+        update_data_button.resize(update_data_button.sizeHint())
+        update_data_button.move(900, 800)
+
+        visualize_data = QPushButton("Visualize Data", self)
+        visualize_data.clicked.connect(self.go_visualize_d)
+        visualize_data.resize(visualize_data.sizeHint())
+        visualize_data.move(1010, 800)
+        self.show()
 
     def update_data(self):
         message = QMessageBox(self)
@@ -27,72 +39,73 @@ class mainwin(QDialog):
         empty_all()
         pop_all()
 
+    def go_visualize_d(self):
+        self.new_wind = viz_data()
+        self.new_wind.show()
 
-class vizdata(QDialog):
+
+class viz_data(QWidget):
     def __init__(self):
-        super(vizdata, self).__init__()
-        loadUi("data_vizMain.ui", self)
-        self.back.clicked.connect(self.CancelButton)
-        self.topop_mov.clicked.connect(self.goTopPopOv)
+        super(viz_data, self).__init__()
+        self.list_control = None
+        self.setup_window()
+        self.data = self.get_data()
 
-    def goTopPopOv(self):
-        popMovOv = pop250MovOlap()
-        widget.addWidget(popMovOv)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def setup_window(self):
+        self.setWindowTitle("IMD-Data Data Visualization")
+        # display_list = QListWidget(self)
+        self.setGeometry(300, 100, 1080, 900)
+        quit_button = QPushButton("Quit Now", self)
+        quit_button.clicked.connect(QApplication.instance().quit)
+        quit_button.resize(quit_button.sizeHint())
+        quit_button.move(900, 850)
 
-    def CancelButton(self):
-        newWind = mainwin()
-        widget.addWidget(newWind)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+        pop_mov_o = QPushButton("Movies Overlap", self)
+        pop_mov_o.clicked.connect(self.show_list)
+        pop_mov_o.resize(pop_mov_o.sizeHint())
+        pop_mov_o.move(900, 800)
 
+    def show_list(self):
+        display_list = QListWidget(self)
+        self.list_control = display_list
+        self.data_to_list(self.data)
+        display_list.resize(400, 350)
+        self.setGeometry(300, 100, 400, 500)
 
-class pop250MovOlap(QDialog):
-    def __init__(self):
-        super(pop250MovOlap, self).__init__()
-        name = 'movie_api.db'
-        open_db(name)
-        loadUi("top_movOverlap.ui", self)
-        self.back.clicked.connect(self.CancelButton)
-        self.get_overlap()
+        self.show()
 
-    def CancelButton(self):
-        newWind = vizdata()
-        widget.addWidget(newWind)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def data_to_list(self, data: list[dict]):
+        for key in data:
+            display_text = f"{key['full_title']}\t\t{key['rating']}\t\t{key['rating_count']}\t\t{key['rankUpDown']}"
+            list_item = QListWidgetItem(display_text, listview=self.list_control)
 
-    def get_overlap(self):
+    def get_data(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
         curs.execute(f"""SELECT t.full_title, t.rating, t.rating_count, p.rankUpDown
-                             FROM movie_headlines t
-                             INNER JOIN pop_movies p 
-                             ON t.id = p.id""")
-        records = curs.fetchall()
-        to_dict(records)
-        self.put_data_in_list(self.records)
-
-
-def put_data_in_list(self, data):
-    numrows = len(data)
-    numcols = len(data[0])
-    self.movo.setColumnCount(numcols)
-    self.movo.setRowCount(numrows)
-    for row in range(numrows):
-        for column in range(numcols):
-            self.movo.setItem(row, column, QTableWidgetItem((data[row][column])))
+                                     FROM movie_headlines t
+                                     INNER JOIN pop_movies p 
+                                     ON t.id = p.id""")
+        overlap = curs.fetchall()
+        new_overlap = to_dict(overlap)
+        return new_overlap
 
 
 def to_dict(lst_tuples):
-    result = [dict(el) for el in lst_tuples]
-    return result
+    var = [{i[0]: list(i[1:])} for i in lst_tuples]
+    return var
 
 
-# main
-app = QApplication(sys.argv)
-mains = mainwin()
-widget = QStackedWidget()
-widget.addWidget(mains)
-widget.setFixedHeight(811)
-widget.setFixedWidth(1261)
-widget.show()
-app.exec_()
+def display_main():
+    qt_app = PySide6.QtWidgets.QApplication(sys.argv)  # sys.argv is the list of command line arguments
+    my_window = main_menu()
+    my_window.show()
+    sys.exit(qt_app.exec())
+
+
+def main():
+    display_main()
+
+
+if __name__ == '__main__':
+    main()

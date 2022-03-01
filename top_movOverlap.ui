@@ -35,10 +35,10 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QTableView" name="movo">
+  <widget class="QTableWidget" name="movo">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>190</x>
      <y>70</y>
      <width>871</width>
      <height>631</height>
