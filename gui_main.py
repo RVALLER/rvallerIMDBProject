@@ -1,4 +1,6 @@
 import sys
+from itertools import groupby
+from operator import itemgetter
 from Sprint_3 import pop_all, empty_all, open_db, close_db
 import PySide6
 from PySide6.QtWidgets import QWidget, QPushButton, QListWidget, QApplication, QListWidgetItem, QMessageBox
@@ -71,13 +73,13 @@ class viz_data(QWidget):
         self.data_to_list(self.data)
         display_list.resize(400, 350)
         self.setGeometry(300, 100, 400, 500)
-
         self.show()
 
     def data_to_list(self, data: list[dict]):
         for key in data:
             display_text = f"{key['full_title']}\t\t{key['rating']}\t\t{key['rating_count']}\t\t{key['rankUpDown']}"
             list_item = QListWidgetItem(display_text, listview=self.list_control)
+            return list_item
 
     def get_data(self):
         name = "movie_api.db"
@@ -92,8 +94,9 @@ class viz_data(QWidget):
 
 
 def to_dict(lst_tuples):
-    var = [{i[0]: list(i[1:])} for i in lst_tuples]
-    return var
+    output = [{"full_title": a[0], "rating": a[1], "rating_count": a[2], "rankUpDown": a[3]} for a in lst_tuples]
+    return output
+
 
 
 def display_main():
