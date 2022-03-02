@@ -2,7 +2,7 @@ import sys
 from itertools import groupby
 from operator import itemgetter
 
-import viz
+import analysis
 from Sprint_3 import pop_all, empty_all, open_db, close_db
 import PySide6
 from PySide6.QtWidgets import QWidget, QPushButton, QListWidget, QApplication, QListWidgetItem, QMessageBox
@@ -42,7 +42,7 @@ class main_menu(QWidget):
         pop_all()
 
     def go_visualize_d(self):
-        self.new_wind = viz.viz_data()
+        self.new_wind = analysis.analyze_data()
         self.new_wind.show()
 
 
