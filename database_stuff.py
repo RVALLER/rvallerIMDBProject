@@ -116,7 +116,7 @@ def get_data():
 # This was taken from my comp390 project. this is why I mentioned I output top 250 to csv. :)
 # This gets data of top 250 from the csv, stores instances of its id to a key variable and extracts proper parameters
 def populate_headline_data(cursor: sqlite3.Cursor, conn: sqlite3.Connection):
-    ratings = get_data()
+    ratings = pd.read_csv('output.csv', encoding="latin-1")
     keys = ratings['id'].tolist()
     data_dict = {}
     for item in keys:

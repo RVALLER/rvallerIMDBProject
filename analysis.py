@@ -44,11 +44,27 @@ class analyze_data(QWidget):
         pop_tv_rud = QPushButton("Sort Pop TV by Rank UpDown", self)
         pop_tv_rud.clicked.connect(self.sort_show_rud)
         pop_tv_rud.resize(pop_tv_rud.sizeHint())
-        pop_tv_rud.move(915, 760)
+        pop_tv_rud.move(916, 765)
 
-        # pop_m_graph = QPushButton("Pop Movie DownTrend", self)
-        # pop_m_graph.resize(pop_m_graph.sizeHint())
-        # pop_m_graph.move(750, 800)
+        pop_tv_r = QPushButton("Sort Pop TV by Ratings", self)
+        pop_tv_r.clicked.connect(self.sort_show_ratings)
+        pop_tv_r.resize(pop_tv_r.sizeHint())
+        pop_tv_r.move(933, 830)
+
+        pop_mov_r = QPushButton("Sort Pop Movies by Ratings", self)
+        pop_mov_r.clicked.connect(self.sort_mov_r)
+        pop_mov_r.resize(pop_mov_r.sizeHint())
+        pop_mov_r.move(925, 734)
+
+        pop_mov_rud = QPushButton("Sort Pop Movies by RankUpDown", self)
+        pop_mov_rud.clicked.connect(self.sort_mov_rud)
+        pop_mov_rud.resize(pop_mov_rud.sizeHint())
+        pop_mov_rud.move(909, 704)
+
+        top_250 = QPushButton("Show Top 250 shows", self)
+        top_250.clicked.connect(self.show_250)
+        top_250.resize(top_250.sizeHint())
+        top_250.move(680, 763)
 
     def show_list_1(self):
         name = "movie_api.db"
@@ -61,6 +77,22 @@ class analyze_data(QWidget):
         result = curs.fetchall()
         self.tableWidget.setRowCount(0)
         self.tableWidget.setColumnCount(3)
+        for row_number, row_data in enumerate(result):
+            self.tableWidget.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
+        conn.close()
+
+    def show_250(self):
+        name = "movie_api.db"
+        conn, curs = open_db(name)
+        query = f"""SELECT full_title, rating
+                    FROM headline_data
+                    """
+        curs.execute(query)
+        result = curs.fetchall()
+        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setRowCount(0)
         for row_number, row_data in enumerate(result):
             self.tableWidget.insertRow(row_number)
             for column_number, data in enumerate(row_data):
@@ -99,3 +131,49 @@ class analyze_data(QWidget):
             for column_number, data in enumerate(row_data):
                 self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
         conn.close()
+
+    def sort_show_ratings(self):
+        name = "movie_api.db"
+        conn, curs = open_db(name)
+        query = f"""SELECT fullTitle, imDbRating, rankUpDown
+                FROM pop_shows
+                ORDER BY imDbRating DESC"""
+        curs.execute(query)
+        result = curs.fetchall()
+        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            self.tableWidget.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
+        conn.close()
+
+    def sort_mov_rud(self):
+        name = "movie_api.db"
+        conn, curs = open_db(name)
+        query = f"""SELECT fullTitle, imDbRating, rankUpDown
+                        FROM pop_movies
+                        ORDER BY rankUpDown DESC"""
+        curs.execute(query)
+        result = curs.fetchall()
+        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            self.tableWidget.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
+
+    def sort_mov_r(self):
+        name = "movie_api.db"
+        conn, curs = open_db(name)
+        query = f"""SELECT fullTitle, imDbRating, rankUpDown
+                        FROM pop_movies
+                        ORDER BY imDbRating DESC"""
+        curs.execute(query)
+        result = curs.fetchall()
+        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            self.tableWidget.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))

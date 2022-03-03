@@ -1,3 +1,4 @@
+import database_stuff
 import secrets
 import requests
 import sqlite3
@@ -37,7 +38,7 @@ def setup_csv():
         dict_writer.writerows(dlist03)
         f.close()
 
-    with open("output.csv", 'w') as f:
+    with open("output4.csv", 'w') as f:
         keys = dlist[0].keys()
         dict_writer = csv.DictWriter(f, keys)  # Uses the dictionary writer of csv mod to write the row titles to file
         dict_writer.writeheader()  # Uses the csv python module to write the keys from dictionary to csv
@@ -137,7 +138,7 @@ def close_db(connection: sqlite3.Connection):
 
 
 def get_data():
-    mostpop = pd.read_csv('output.csv', encoding="latin-1")
+    mostpop = pd.read_csv('output4.csv', encoding="latin-1")
     return mostpop
 
 
@@ -269,7 +270,7 @@ def pop_all():
     conn, cursor = open_db(name)
     db_setter(cursor)
     populate_ratings_data(cursor, conn)
-    populate_headline_data(cursor, conn)
+    database_stuff.populate_headline_data(cursor, conn)
     populate_movie250(cursor, conn)
     populate_pop_movies(cursor, conn)
     populate_pop_shows(cursor, conn)
