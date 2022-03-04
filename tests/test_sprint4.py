@@ -32,9 +32,11 @@ def test_rankUpDown_sort():
                     FROM dummy_pop
                     ORDER BY rankUpDown DESC"""
     curs.execute(query)
-    result = str(curs.fetchall())
-    print(result)
-    assert result == "[(1000.0,), (100.0,), (10.0,), (-10.0,), (-1000.0,)]"
+    result = curs.fetchall()
+    result = str(result)
+    result = result.replace("'", "")
+    result = result.replace(",", "")
+    assert result == "[(1000.0) (100.0) (10.0) (-10.0) (-1000.0)]"
 
 
 def test_overlap():
