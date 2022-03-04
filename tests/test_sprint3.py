@@ -17,7 +17,7 @@ def new_table(cursor: sqlite3.Cursor):
     cursor.execute('''CREATE TABLE IF NOT EXISTS dummy_pop(
                    id TEXT PRIMARY KEY,
                    rank TEXT,
-                   rankUpDown FLOAT,
+                   rankUpDown INTEGER,
                    title TEXT,
                    fullTitle INTEGER,
                    year FLOAT DEFAULT 0,

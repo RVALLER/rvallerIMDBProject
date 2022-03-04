@@ -4,7 +4,6 @@ from Sprint_3 import pop_all, empty_all
 import PySide6
 from PySide6.QtWidgets import QWidget, QPushButton, QApplication, QMessageBox
 
-
 class main_menu(QWidget):
     def __init__(self):
         super().__init__()
