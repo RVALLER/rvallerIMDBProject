@@ -44,6 +44,10 @@ class main_menu(QWidget):
     def go_visualize_d(self):
         self.new_wind = analysis.analyze_data()
         self.new_wind.show()
+        self.close_window()
+
+    def close_window(self):
+        self.close()
 
 
 def display_main():
