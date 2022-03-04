@@ -25,19 +25,19 @@ class graph_stuff(QWidget):
         self.setup_graph()
 
     def setup_graph(self):
-        query_1 = f"""SELECT rankUpDown from pop_movies
+        query_1 = """SELECT rankUpDown from pop_movies
                        WHERE rankUpDown > 0
                        ORDER by rankUpDown DESC"""
 
-        query_2 = f"""SELECT rankUpDown from pop_movies
+        query_2 = """SELECT rankUpDown from pop_movies
                            WHERE rankUpDown < 0
                            ORDER by rankUpDown DESC"""
 
-        query_3 = f"""SELECT rankUpDown from pop_shows
+        query_3 = """SELECT rankUpDown from pop_shows
                                WHERE rankUpDown > 0
                                ORDER by rankUpDown DESC"""
 
-        query_4 = f"""SELECT rankUpDown from pop_shows
+        query_4 = """SELECT rankUpDown from pop_shows
                                    WHERE rankUpDown < 0
                                    ORDER by rankUpDown DESC"""
 

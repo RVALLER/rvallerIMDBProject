@@ -92,7 +92,7 @@ class analyze_data(QWidget):
         value = index.sibling(index.row(), index.column()).data()
         if value == "The Crown":
             conn, curs = open_db("movie_api.db")
-            query = f"""select * from ratings_data
+            query = """select * from ratings_data
                                 where title == "The Crown" """
             curs.execute(query)
             result = curs.fetchall()
@@ -108,7 +108,7 @@ class analyze_data(QWidget):
         value = index.sibling(index.row(), index.column()).data()
         if value == "Planet Earth II":
             conn, curs = open_db("movie_api.db")
-            query = f"""select * from ratings_data
+            query = """select * from ratings_data
                     where title == "Planet Earth II" """
             curs.execute(query)
             result = curs.fetchall()
@@ -118,21 +118,10 @@ class analyze_data(QWidget):
                 self.tableWidget.insertRow(row_number)
                 for column_number, data in enumerate(row_data):
                     self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
-        elif value == "The Wheel of Time":
-            conn, curs = open_db("movie_api.db")
-            query = f"""select * from ratings_data
-                                where title == "The Wheel of Time" """
-            curs.execute(query)
-            result = curs.fetchall()
-            self.tableWidget.setRowCount(0)
-            self.tableWidget.setColumnCount(24)
-            for row_number, row_data in enumerate(result):
-                self.tableWidget.insertRow(row_number)
-                for column_number, data in enumerate(row_data):
-                    self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
+
         elif value == "Das Boot":
             conn, curs = open_db("movie_api.db")
-            query = f"""select * from ratings_data
+            query = """select * from ratings_data
                                 where title == "Das Boot" """
             curs.execute(query)
             result = curs.fetchall()
@@ -145,7 +134,7 @@ class analyze_data(QWidget):
 
         elif value == "Louie":
             conn, curs = open_db("movie_api.db")
-            query = f"""select * from ratings_data
+            query = """select * from ratings_data
                                 where title == "Louie" """
             curs.execute(query)
             result = curs.fetchall()
@@ -159,7 +148,7 @@ class analyze_data(QWidget):
     def show_list_1(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT t.full_title, t.rating, p.rankUpDown
+        query = """SELECT t.full_title, t.rating, p.rankUpDown
                         FROM movie_headlines t
                         INNER JOIN pop_movies p 
                         ON t.id = p.id"""
@@ -176,7 +165,7 @@ class analyze_data(QWidget):
     def pop_mov(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT t.title, t.imDbRating
+        query = """SELECT t.title, t.imDbRating
                         FROM pop_movies t"""
         curs.execute(query)
         result = curs.fetchall()
@@ -191,7 +180,7 @@ class analyze_data(QWidget):
     def show_250(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT title, rating
+        query = """SELECT title, rating
                     FROM headline_data
                     """
         curs.execute(query)
@@ -207,7 +196,7 @@ class analyze_data(QWidget):
     def show_list_2(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT t.full_title, t.rating, p.rankUpDown
+        query = """SELECT t.full_title, t.rating, p.rankUpDown
                 FROM headline_data t
                 INNER JOIN pop_shows p 
                 ON t.id = p.id"""
@@ -224,7 +213,7 @@ class analyze_data(QWidget):
     def sort_show_rud(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT fullTitle, imDbRating, rankUpDown
+        query = """SELECT fullTitle, imDbRating, rankUpDown
                 FROM pop_shows
                 ORDER BY rankUpDown DESC"""
         curs.execute(query)
@@ -240,7 +229,7 @@ class analyze_data(QWidget):
     def sort_show_ratings(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT fullTitle, imDbRating, rankUpDown
+        query = """SELECT fullTitle, imDbRating, rankUpDown
                 FROM pop_shows
                 ORDER BY imDbRating DESC"""
         curs.execute(query)
@@ -256,7 +245,7 @@ class analyze_data(QWidget):
     def sort_mov_rud(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT fullTitle, imDbRating, rankUpDown
+        query = """SELECT fullTitle, imDbRating, rankUpDown
                         FROM pop_movies
                         ORDER BY rankUpDown DESC"""
         curs.execute(query)
@@ -271,7 +260,7 @@ class analyze_data(QWidget):
     def sort_mov_r(self):
         name = "movie_api.db"
         conn, curs = open_db(name)
-        query = f"""SELECT fullTitle, imDbRating, rankUpDown
+        query = """SELECT fullTitle, imDbRating, rankUpDown
                         FROM pop_movies
                         ORDER BY imDbRating DESC"""
         curs.execute(query)
