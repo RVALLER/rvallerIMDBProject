@@ -41,7 +41,7 @@ class graph_stuff(QWidget):
                                    WHERE rankUpDown < 0
                                    ORDER by rankUpDown DESC"""
 
-        first =
+        first = int(get_count(query_1))
         second = int(get_count(query_2))
         third = int(get_count(query_3))
         fourth = int(get_count(query_4))
