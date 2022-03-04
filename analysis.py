@@ -2,6 +2,7 @@ from PyQt6 import QtCore
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QWidget, QPushButton, QApplication, QVBoxLayout, QMessageBox
 
+import graph
 import gui_main
 from Sprint_3 import open_db
 
@@ -70,10 +71,18 @@ class analyze_data(QWidget):
         pop_m.resize(pop_m.sizeHint())
         pop_m.move(989, 679)
 
-        back = QPushButton("Back",self)
+        back = QPushButton("Back", self)
         back.clicked.connect(self.go_back)
         back.resize(back.size())
         back.move(40, 850)
+
+        graph = QPushButton("Graph of Trends", self)
+        graph.clicked.connect(self.go_graph)
+        graph.resize(back.size())
+        graph.move(210, 850)
+
+    def go_graph(self):
+        graph.graph_stuff()
 
     def go_back(self):
         self.new_wind = gui_main.main_menu()
