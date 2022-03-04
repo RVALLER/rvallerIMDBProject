@@ -293,7 +293,7 @@ def main():
     conn, cursor = open_db(name)
     janitorial(cursor)
     db_setter(cursor)
-    populate_ratings_data(cursor,conn)
+    populate_ratings_data(cursor, conn)
     populate_headline_data(cursor, conn)
     populate_movie250(cursor, conn)
     populate_pop_movies(cursor, conn)

@@ -150,7 +150,7 @@ class analyze_data(QWidget):
         conn, curs = open_db(name)
         query = """SELECT t.full_title, t.rating, p.rankUpDown
                         FROM movie_headlines t
-                        INNER JOIN pop_movies p 
+                        INNER JOIN pop_movies p
                         ON t.id = p.id"""
         curs.execute(query)
         result = curs.fetchall()
@@ -198,7 +198,7 @@ class analyze_data(QWidget):
         conn, curs = open_db(name)
         query = """SELECT t.full_title, t.rating, p.rankUpDown
                 FROM headline_data t
-                INNER JOIN pop_shows p 
+                INNER JOIN pop_shows p
                 ON t.id = p.id"""
         curs.execute(query)
         result = curs.fetchall()
