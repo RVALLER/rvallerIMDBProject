@@ -1,11 +1,8 @@
 import sys
-from itertools import groupby
-from operator import itemgetter
-
 import analysis
-from Sprint_3 import pop_all, empty_all, open_db, close_db
+from Sprint_3 import pop_all, empty_all
 import PySide6
-from PySide6.QtWidgets import QWidget, QPushButton, QListWidget, QApplication, QListWidgetItem, QMessageBox
+from PySide6.QtWidgets import QWidget, QPushButton, QApplication, QMessageBox
 
 
 class main_menu(QWidget):

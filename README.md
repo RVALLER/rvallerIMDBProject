@@ -1,20 +1,16 @@
 NAME: RYAN VALLER
 
 
-INSTALL INSTR: For Sprint 3, make sure each database (movie_api.db & dummy.db) is currently empty before 
-the following actions to ensure smooth testing: 1.) Before running Sprint_3.py and 2.) before running 
-test_sprint2 & test_sprint3. Make sure all requirements are acquired per requirements.txt and also 
-assure that all necessary output files, secret key (yours) is in place. 
+INSTALL INSTR: For Sprint 4, Simply open the file labeled 'gui_main.py' and study up on the user manual for ease of GUI
+navigation. As with prior Sprints, make sure to run requirements.txt to ensure all proper packages and included software
+is installed in virtual env at time of running gui_main.py.
 
-DESCRIPTION: This program builds upon the first two sprints that scrapes the data from imDB's API website. The
-data included is: top 250 shows, top 250 movies, ratings data for the wheel of time, and top 1,50,150,200.
-from that initial data scrape, the most popular movies and tv shows, as well as tables for the biggest
-3 upticks and biggest down tick in each respective cat. (movie and tv) and implements various methods 
-including sqlite3, output.csv, test modules, pandas, and requests to neatly output the 
-api data into the database as instructed. It also uses a dictionary flattener to more easily output the
-ratings data into their own unique table in movie_api.db.
+DESCRIPTION: The final (prototype) released in this sprint is a showcase of all the work that led up to this point. In
+this sprint, a Graphical User Interface (GUI) has been added to the project. This GUI ensures ease of access to all
+items/data/database info that was created in sprints 1-3. It contains features such as pyqt,pyqt graphs, pyside6
+and more. With a bare-bones design, this sleek UI is an effective way to access data.
 
 
-MISSING FEATURES: The only potential missing feature for Sprint 3 would be bad path tests for automation testing. 
-Still not fully clear how to properly do some of these automated tests to your required parameters.
+MISSING FEATURES: Potentially some tests. Only other missing feature would happen if instructions were misinterpreted
+However unlikely that case may be.
 

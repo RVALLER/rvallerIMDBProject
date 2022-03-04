@@ -1,7 +1,5 @@
-from PyQt6 import QtCore
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QWidget, QPushButton, QApplication, QVBoxLayout, QMessageBox
-
+from PySide6.QtWidgets import QWidget, QPushButton, QApplication
 import graph
 import gui_main
 from Sprint_3 import open_db
