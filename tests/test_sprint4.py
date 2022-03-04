@@ -36,7 +36,7 @@ def test_rankUpDown_sort():
     result = str(result)
     result = result.replace("'", "")
     result = result.replace(",", "")
-    assert result == "[(1000.0) (100.0) (10.0) (-10.0) (-1000.0)]"
+    assert result == "[(1000) (100) (10) (-10) (-1000)]"
 
 
 def test_overlap():
